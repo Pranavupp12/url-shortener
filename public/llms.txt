@@ -1,0 +1,18 @@
+# SwiftLink
+
+> A powerful, free tool to shrink long links into memorable short URLs. Track clicks, analyze traffic, and boost your brand visibility.
+
+## Core Pages
+
+- [Home](https://your-domain.com)
+- [Blogs](https://your-domain.com/blog)
+- [Privacy Policy](https://your-domain.com/privacy)
+
+## Features
+
+- **Shortening**: Instant URL shortening with analytics tracking.
+
+## API Usage
+
+Our platform provides endpoints for:
+- Creating short links

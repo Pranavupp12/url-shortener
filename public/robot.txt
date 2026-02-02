@@ -1,0 +1,13 @@
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /result/success
+
+# Host
+Host: https://your-domain.com
+
+# Sitemap
+Sitemap: https://your-domain.com/sitemap.xml
