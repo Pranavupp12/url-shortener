@@ -21,7 +21,7 @@ export function Footer() {
           <div className="flex flex-col items-start gap-2">
             <Link href="/" className="flex items-center gap-2 group">
               <span className="font-bold text-xl tracking-tight text-white">
-                SwiftLink
+                MinifyLinks
               </span>
             </Link>
             <p className="text-white text-sm">

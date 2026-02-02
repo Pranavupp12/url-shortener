@@ -27,7 +27,7 @@ export function Navbar() {
         {/* LOGO (Left) */}
         <Link href="/" className="flex items-center gap-2 group">
           <span className="font-bold text-2xl tracking-tight text-gray-900">
-            SwiftLink
+            MinifyLinks
           </span>
         </Link>
 

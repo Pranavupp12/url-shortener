@@ -149,7 +149,7 @@ export default async function SingleBlogPage({ params }: Props) {
                 <div className="flex flex-wrap items-center justify-center gap-6 text-gray-500 text-xs sm:text-sm font-medium pt-2">
                     <div className="flex items-center">
                       <User className="w-4 h-4 mr-2 text-blue-600" />
-                      SwiftLink Team
+                      MinifyLinks Team
                     </div>
                     <div className="flex items-center">
                       <Calendar className="w-4 h-4 mr-2 text-blue-600" />

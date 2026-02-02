@@ -1,12 +1,12 @@
 # SwiftLink
 
-> A powerful, free tool to shrink long links into memorable short URLs. Track clicks, analyze traffic, and boost your brand visibility.
+> A powerful, free tool to shrink long links into memorable short URLs and boost brand visibility.
 
 ## Core Pages
 
-- [Home](https://your-domain.com)
-- [Blogs](https://your-domain.com/blog)
-- [Privacy Policy](https://your-domain.com/privacy)
+- [Home](https://minifylinks.com)
+- [Blogs](https://minifylinks.com/blog)
+- [Privacy Policy](https://minifylinks.com/privacy)
 
 ## Features
 

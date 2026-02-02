@@ -74,7 +74,7 @@ export function FeaturedBlogCard({ post }: { post: BlogPost }) {
                  <User className="w-5 h-5" />
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-bold text-gray-900">SwiftLink Team</span>
+                <span className="text-sm font-bold text-gray-900">MinifyLinks Team</span>
                 <span className="text-xs text-gray-400 font-medium">
                    {new Date(post.publishedAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
                 </span>
