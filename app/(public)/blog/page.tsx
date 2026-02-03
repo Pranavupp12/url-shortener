@@ -2,24 +2,89 @@ import { prisma } from '@/lib/prisma'
 import { BlogCard } from '@/components/blog-page/BlogCard'
 import { FeaturedBlogCard } from '@/components/blog-page/FeaturedBlogCard'
 import { BlogSidebar } from '@/components/blog-page/BlogSidebar'
-import { BlogPagination } from '@/components/blog-page/BlogPagination' // Import new component
+import { BlogPagination } from '@/components/blog-page/BlogPagination' 
 import type { Metadata } from 'next'
 import { BlogPost } from '@/types/blog' 
 import { Prisma } from '@prisma/client'
+import { unstable_cache } from 'next/cache' // <--- IMPORT THIS
 
 export const metadata: Metadata = {
   title: 'Blogs',
   description: 'Latest news, tips, and insights about URL shortening and digital marketing.',
 }
 
-export const revalidate = 3600; 
 const PAGE_SIZE = 10;
+
+// --- CACHED FUNCTION 1: Fetch Categories ---
+const getCachedCategories = unstable_cache(
+  async () => {
+    const categoryData = await prisma.blogPost.findMany({
+      where: { isPublished: true },
+      select: { categories: true }
+    });
+    return categoryData.flatMap(p => p.categories || []);
+  },
+  ['blog-categories-list'], // Cache Key
+  { revalidate: 3600, tags: ['categories'] } // Revalidate every hour
+);
+
+// --- CACHED FUNCTION 2: Fetch Posts ---
+// We pass all filter params here so the cache creates unique entries for each search/page combination
+const getCachedPostsData = unstable_cache(
+  async (searchTerm: string, categoryFilter: string, page: number, matchingCategories: string[]) => {
+    
+    // 1. Reconstruct Query Logic
+    const whereClause: Prisma.BlogPostWhereInput = {
+      isPublished: true,
+      AND: [
+        categoryFilter !== 'All' ? { categories: { has: categoryFilter } } : {},
+        searchTerm ? {
+          OR: [
+            { title: { contains: searchTerm, mode: 'insensitive' } },
+            { excerpt: { contains: searchTerm, mode: 'insensitive' } },
+            matchingCategories.length > 0 ? { categories: { hasSome: matchingCategories } } : {}
+          ]
+        } : {}
+      ]
+    };
+
+    // 2. Fetch Data
+    const [rawPosts, totalCount] = await Promise.all([
+      prisma.blogPost.findMany({
+        where: whereClause,
+        orderBy: { publishedAt: 'desc' },
+        take: PAGE_SIZE,
+        skip: (page - 1) * PAGE_SIZE,
+        select: {
+          id: true, title: true, slug: true, excerpt: true, 
+          image: true, categories: true, publishedAt: true, 
+          updatedAt: true, isPublished: true,
+        }
+      }),
+      prisma.blogPost.count({ where: whereClause })
+    ]);
+
+    // 3. Transform Data INSIDE cache (Dates -> Strings)
+    // This is crucial because cache only stores JSON
+    const posts: BlogPost[] = rawPosts.map(post => ({
+      ...post,
+      content: "", 
+      metaTitle: "", metaDescription: "", metaKeywords: "", focusKeyword: "",
+      publishedAt: post.publishedAt.toISOString(),
+      updatedAt: post.updatedAt.toISOString(),
+    }));
+
+    return { posts, totalCount };
+  },
+  ['blog-posts-grid'], // Base Cache Key
+  { revalidate: 3600 } // Revalidate every hour
+);
 
 interface BlogPageProps {
   searchParams: Promise<{
     search?: string;
     category?: string;
-    page?: string; // Add page param
+    page?: string; 
   }>
 }
 
@@ -27,19 +92,13 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
   const params = await searchParams;
   const searchTerm = (params.search || '').trim();
   const categoryFilter = params.category || 'All';
-  
-  // Parse Page Number (Default to 1)
   const currentPage = Number(params.page) || 1;
 
-  // --- STEP 1: Categories (for Sidebar) ---
-  const categoryData = await prisma.blogPost.findMany({
-    where: { isPublished: true },
-    select: { categories: true }
-  });
-  const allCategoriesRaw = categoryData.flatMap(p => p.categories || []);
+  // --- STEP 1: Get Categories (Cached) ---
+  const allCategoriesRaw = await getCachedCategories();
   const uniqueCategories = ["All", ...Array.from(new Set(allCategoriesRaw))];
 
-  // --- STEP 2: Smart Matching ---
+  // --- STEP 2: Smart Matching (Client-side logic, fast) ---
   let matchingCategories: string[] = [];
   if (searchTerm) {
     matchingCategories = uniqueCategories.filter(cat => 
@@ -47,51 +106,11 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
     );
   }
 
-  // --- STEP 3: Build Query ---
-  const whereClause: Prisma.BlogPostWhereInput = {
-    isPublished: true,
-    AND: [
-      categoryFilter !== 'All' ? { categories: { has: categoryFilter } } : {},
-      searchTerm ? {
-        OR: [
-          { title: { contains: searchTerm, mode: 'insensitive' } },
-          { excerpt: { contains: searchTerm, mode: 'insensitive' } },
-          matchingCategories.length > 0 ? { categories: { hasSome: matchingCategories } } : {}
-        ]
-      } : {}
-    ]
-  };
-
-  // --- STEP 4: Fetch Data & Count (Parallel) ---
-  const [rawPosts, totalCount] = await Promise.all([
-    prisma.blogPost.findMany({
-      where: whereClause,
-      orderBy: { publishedAt: 'desc' },
-      take: PAGE_SIZE,                     // Limit: 10
-      skip: (currentPage - 1) * PAGE_SIZE, // Offset: (Page-1) * 10
-      select: {
-        id: true, title: true, slug: true, excerpt: true, 
-        image: true, categories: true, publishedAt: true, 
-        updatedAt: true, isPublished: true,
-      }
-    }),
-    prisma.blogPost.count({ where: whereClause }) // Get total matching posts
-  ]);
-
-  // Transform Data
-  const posts: BlogPost[] = rawPosts.map(post => ({
-    ...post,
-    content: "", 
-    metaTitle: "", metaDescription: "", metaKeywords: "", focusKeyword: "",
-    publishedAt: post.publishedAt.toISOString(),
-    updatedAt: post.updatedAt.toISOString(),
-  }));
-
+  // --- STEP 3: Fetch Posts (Cached) ---
+  const { posts, totalCount } = await getCachedPostsData(searchTerm, categoryFilter, currentPage, matchingCategories);
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
   // --- Layout Logic ---
-  // Only show "Featured" layout if we are on Page 1 AND not searching
-  // If user goes to Page 2, we just show a grid of 10.
   const isFiltering = !!searchTerm || categoryFilter !== 'All';
   const showFeaturedLayout = !isFiltering && currentPage === 1;
 
@@ -104,34 +123,39 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
   }
 
   const getHeadingText = () => {
-  if (searchTerm) return `Results for "${searchTerm}"`;
-  if (categoryFilter && categoryFilter !== 'All') return `${categoryFilter}`;
-  return 'Browse Our Insights';
+    if (searchTerm) return `Results for "${searchTerm}"`;
+    if (categoryFilter && categoryFilter !== 'All') return `${categoryFilter}`;
+    
+    // UPDATE: Return JSX with the span applied to "Insights"
+    return (
+      <>
+        Browse Our{' '}
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-700">
+          Insights
+        </span>
+      </>
+    );
   };
 
   return (
-    <div className="min-h-screen bg-white pt-20 px-6 ">
-      
+    <div className="min-h-screen bg-white pt-20 px-6">
       <div className="sm:mb-10 text-center max-w-2xl mx-auto">
          <span className="text-sm font-bold uppercase tracking-wider text-gray-500">
             Read Our Blogs
           </span>
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 tracking-tight mb-4">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-semibold text-gray-900 tracking-tight mb-4">
           {getHeadingText()}
         </h1>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 pb-10 sm:pb-20 flex flex-col lg:flex-row gap-12">
+      <div className="max-w-6xl mx-auto px-4 pb-10 sm:pb-20 flex flex-col lg:flex-row gap-12">
         <BlogSidebar categories={uniqueCategories} />
 
         <div className="flex-1 space-y-10">
-          
-          {/* Featured Post (Only Page 1) */}
           {featuredPost && (
             <FeaturedBlogCard post={featuredPost} />
           )}
 
-          {/* Grid Area */}
           {regularPosts.length > 0 ? (
             <>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -139,8 +163,6 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
                     <BlogCard key={post.id} post={post} priority={index < 2} />
                 ))}
                 </div>
-                
-                {/* --- Pagination Controls --- */}
                 <BlogPagination currentPage={currentPage} totalPages={totalPages} />
             </>
           ) : (

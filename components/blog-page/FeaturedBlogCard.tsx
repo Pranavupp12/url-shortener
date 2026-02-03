@@ -20,7 +20,7 @@ export function FeaturedBlogCard({ post }: { post: BlogPost }) {
               loading="eager"
               fetchPriority="high"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover"
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-300">
@@ -59,7 +59,7 @@ export function FeaturedBlogCard({ post }: { post: BlogPost }) {
           </div>
 
           <div className="space-y-3">
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors">
               {post.title}
             </h3>
             <p className="text-gray-500 text-md sm:text-lg line-clamp-3 leading-relaxed">

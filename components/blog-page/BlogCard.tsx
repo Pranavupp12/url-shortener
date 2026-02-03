@@ -15,7 +15,7 @@ export function BlogCard({ post, className,priority = false }: BlogCardProps) {
   return (
     <div className={cn("group flex flex-col gap-4 mb-8", className)}>
       {/* Image Container with Zoom Effect */}
-      <Link href={`/blog/${post.slug}`} className="block overflow-hidden rounded-xl bg-gray-100 relative aspect-[16/9] shadow-sm group-hover:shadow-md transition-all">
+      <Link href={`/blog/${post.slug}`} className="block overflow-hidden rounded-xl bg-gray-100 relative aspect-[16/9] ">
          {post.image ? (
             <Image 
               src={post.image} 
@@ -23,7 +23,7 @@ export function BlogCard({ post, className,priority = false }: BlogCardProps) {
               fill 
               priority={priority}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover "
             />
          ) : (
             <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-300">
@@ -61,7 +61,7 @@ export function BlogCard({ post, className,priority = false }: BlogCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold tracking-tight text-gray-900 group-hover:text-blue-600 transition-colors leading-snug">
+        <h3 className="text-xl font-semibold tracking-tight text-gray-900 group-hover:text-blue-600 transition-colors leading-snug">
           <Link href={`/blog/${post.slug}`}>
             {post.title}
           </Link>

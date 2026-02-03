@@ -9,8 +9,8 @@ import { ChatInput, ChatInputTextArea, ChatInputSubmit } from "@/components/ui/c
 function StatItem({ number, label }: { number: string, label: string }) {
   return (
     <div className="flex flex-col items-center">
-      <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-1">{number}</span>
-      <span className="text-xs sm:text-sm font-medium text-white uppercase tracking-wide">{label}</span>
+      <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1">{number}</span>
+      <span className="text-[9px] sm:text-sm font-medium text-white uppercase tracking-wide">{label}</span>
     </div>
   )
 }
@@ -56,13 +56,13 @@ export function HeroSection() {
 
   return (
     <>
-    <section className="relative pt-15 sm:pt-27 pb-0 sm:pb-10 text-center space-y-8 px-6 lg:px-0" id='hero-section'>
-      <div className="absolute top-40 lg:top-30 left-1/2 -translate-x-1/2 w-[400px] lg:w-[900px] h-[500px] bg-blue-100/60 blur-[50px] rounded-full pointer-events-none" />
+    <section className="relative pt-20 sm:pt-27 pb-0 sm:pb-10 text-center space-y-8 px-6 lg:px-0" id='hero-section'>
+      <div className="absolute top-30 lg:top-30 left-1/2 -translate-x-1/2 w-[300px] sm:w-[400px] lg:w-[900px] h-[300px] md:h-[500px] bg-blue-100/60 blur-[50px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 max-w-3xl mx-auto px-6 lg:px-0">
-        <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-gray-900 tracking-tight leading-[1.1] mb-4 sm:mb-6">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-semibold text-gray-900 tracking-tight leading-[1.1] mb-6 sm:mb-6">
           Shorten URLs, <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-700">
             Expand Your Reach.
           </span>
         </h1>
@@ -90,7 +90,7 @@ export function HeroSection() {
 
     </section>
 
-     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 my-2.5 py-15 px-10 bg-blue-600 max-w-full mx-0 relative z-10">
+     <div className="grid grid-cols-4 gap-14 md:gap-0 my-2.5 py-5 sm:py-15 px-10 bg-blue-600 max-w-full mx-0 relative z-10">
         <StatItem number="10K+" label="Links Shortened" />
         <StatItem number="5M+" label="Clicks Made" />
         <StatItem number="99.9%" label="Uptime" />

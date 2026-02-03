@@ -32,8 +32,8 @@ export function AbstractCtaBanner() {
             Get Started
           </span>
           
-          <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-[1.1] text-gray-900">
-            Start sharing <br/><span className="text-blue-600">smarter links.</span>
+          <h2 className="text-2xl sm:text-4xl md:text-6xl font-semibold tracking-tight leading-[1.1] text-gray-900">
+            Start sharing <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-700">smarter links.</span>
           </h2>
           
           <p className="text-md sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto font-medium">

@@ -10,12 +10,12 @@ function StepCard({ number, title, description }: StepCardProps) {
   return (
     <div className="flex flex-col items-start text-left h-full p-2">
       {/* UPDATED: Changed text-gray-900 to text-blue-600 */}
-      <span className="text-4xl sm:text-6xl font-extrabold text-blue-600 mb-6 font-mono tracking-tighter">
+      <span className="text-4xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-700 mb-6 font-mono tracking-tighter">
         {number}
       </span>
       
       {/* Content */}
-      <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">{title}</h3>
+      <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3">{title}</h3>
       <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-medium">
         {description}
       </p>
@@ -30,12 +30,12 @@ export function HowItWorks() {
       <div className="max-w-6xl mx-auto bg-white rounded-[2.5rem] px-6 md:px-16 text-center">
         
         {/* Header Section */}
-        <div className="mb-10 sm:mb-16 max-w-2xl mx-auto">
+        <div className="relative z-10 mb-10 sm:mb-16 max-w-2xl mx-auto">
           <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-500">
             How it works
           </span>
-          <h2 className="text-2xl md:text-5xl font-bold text-gray-900 tracking-tight">
-             Shorten your links in <span className="text-blue-600 ">3 Steps.</span>
+          <h2 className="text-2xl md:text-5xl font-semibold text-gray-900 tracking-tight">
+             Shorten your links in <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-700">3 Steps.</span>
           </h2>
         </div>
 

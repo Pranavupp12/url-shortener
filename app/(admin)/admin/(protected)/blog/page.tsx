@@ -7,10 +7,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Pencil, Trash2, Plus, Loader2, ImageIcon, Clock, LayoutDashboard } from 'lucide-react'
 import Image from 'next/image'
 import { toast } from "sonner"
-
-// Import your existing Modals
 import { BlogFormDialog, BlogPostData } from "@/components/admin/BlogFormDialog"
 import { DeletePostDialog } from "@/components/admin/DeletePostDialog"
+import { BlogSkeleton } from '@/components/admin/skeletons/BlogSkeleton'
 
 export default function BlogPage() {
   // Initialize as empty array to prevent immediate .map() crash
@@ -64,6 +63,10 @@ export default function BlogPage() {
   const handleEdit = (post: any) => {
     setEditingPost(post)
     setIsFormOpen(true)
+  }
+
+  if (loading && posts.length === 0) {
+    return <BlogSkeleton />
   }
 
   return (

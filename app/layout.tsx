@@ -6,12 +6,16 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 ;export const metadata: Metadata = {
-  title: {
-    default: "SwiftLink - Free URL Shortener & Analytics",
-    template: "%s | SwiftLink", 
+  metadataBase: new URL('https://minifylinks.com'), 
+  alternates: {
+    canonical: './', 
   },
-  description: "Simplify your links, amplify your reach. A powerful, free tool to shrink long links, track clicks, and analyze traffic.",
-  keywords: ["url shortener", "link shortener", "free url shortener", "link tracking", "analytics"],
+  title: {
+    default: "MinifyLinks - Free URL Shortener",
+    template: "%s | MinifyLinks",
+  },
+  description: "Simplify your links, amplify your reach. A powerful, free tool to shrink long links.",
+  keywords: ["url shortener", "link shortener", "free url shortener"],
   robots: {
     index: false,
     follow: false,
@@ -19,11 +23,20 @@ const inter = Inter({ subsets: ["latin"] });
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://your-domain.com",
-    siteName: "SwiftLink",
+    url: "https://minifylinks.com",
+    siteName: "MinifyLinks",
   },
   twitter: {
     card: "summary_large_image",
+  },
+  icons: {
+    icon: [
+      { url: '/logos/favicon.ico' },
+      { url: '/logos/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/logos/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    shortcut: '/logos/favicon.ico',
+    apple: '/logos/apple-touch-icon.png',
   },
 };
 

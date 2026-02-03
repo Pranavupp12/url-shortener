@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Learn how SwiftLink collects, uses, and protects your data. We prioritize transparency and user privacy.",
+  description: "Learn how MinifyLinks collects, uses, and protects your data. We prioritize transparency and user privacy.",
 };
 
 export default function PrivacyPolicy() {
@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
           <div className="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
             <ShieldCheck className="w-6 h-6 text-blue-600" />
           </div>
-          <h1 className="text-4xl font-black tracking-tight text-slate-900">Privacy Policy</h1>
+          <h1 className="text-4xl font-black font-semibold tracking-tight text-slate-900">Privacy Policy</h1>
           <p className="text-slate-500">Last updated: {lastUpdated}</p>
         </div>
 
@@ -50,7 +50,7 @@ export default function PrivacyPolicy() {
                 1. Introduction
               </h2>
               <p className="text-gray-600 leading-relaxed">
-                Welcome to <strong>SwiftLink</strong> ("we," "our," or "us"). We are committed to protecting your privacy while you use our URL shortening and redirection service. 
+                Welcome to <strong>MinifyLinks</strong> ("we," "our," or "us"). We are committed to protecting your privacy while you use our URL shortening and redirection service. 
                 This Privacy Policy explains how we collect, use, and safeguard information when you access our short links or use our dashboard.
               </p>
             </section>
@@ -116,7 +116,7 @@ export default function PrivacyPolicy() {
               <p className="text-gray-600">
                 If you have questions about this privacy policy, please contact us at:
               </p>
-              <p className="font-medium text-slate-900">admin@yourdomain.com</p>
+              <p className="font-medium text-slate-900 hover:underline hover:text-blue-500">support@minifylinks.com</p>
             </section>
 
           </CardContent>

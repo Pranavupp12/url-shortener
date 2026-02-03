@@ -35,7 +35,7 @@ const BentoCard = ({
       // If horizontal, constrain text width so it doesn't overlap image
       variant === "horizontal" ? "w-[40%] mb-0" : "w-full"
     )}>
-      <h3 className="text-lg md:text-2xl font-bold text-gray-900 mb-2 leading-tight">{title}</h3>
+      <h3 className="text-lg md:text-2xl font-semibold text-gray-900 mb-2 leading-tight">{title}</h3>
       <p className="text-gray-700 leading-relaxed font-medium text-sm">
         {description}
       </p>
@@ -64,12 +64,12 @@ export function FeaturesBento() {
           </span>
           
           {/* Heading (Removed the word 'Features') */}
-          <h2 className="text-2xl md:text-5xl font-bold text-gray-900 tracking-tight">
-            Designed for <span className="text-blue-600">Growth.</span>
+          <h2 className="text-2xl md:text-5xl font-semibold text-gray-900 tracking-tight">
+            Designed for <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-700">Growth.</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px] px-6 md:px-0">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px] px-6 lg:px-0">
           
           {/* 1. LIGHTNING FAST (Vertical) */}
           <BentoCard 
@@ -98,7 +98,7 @@ export function FeaturesBento() {
             graphic={
               <div className="relative w-full h-full">
                  <Image 
-                   src="/images/mobile.png"
+                   src="/images/mobile-new.png"
                    alt="Mobile Phone"
                    fill
                    loading="eager"

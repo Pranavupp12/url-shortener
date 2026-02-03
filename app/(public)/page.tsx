@@ -6,10 +6,10 @@ import { AbstractCtaBanner } from "@/components/home-page/CtaBanner";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "SwiftLink - Shorten URLs & Increase your presence Free",
-  description: "Create short, memorable links in seconds. Track locations, devices, and click stats with our free URL shortener dashboard.",
+  title: "MinifyLinks - Shorten URLs & Increase your presence for Free",
+  description: "Create short, memorable links in seconds. Boost your brand visibility and performance with our free URL shortener.",
   alternates: {
-    canonical: "https://your-domain.com",
+    canonical: "https://minifylinks.com",
   },
 };
 

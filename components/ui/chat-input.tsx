@@ -112,6 +112,7 @@ function ChatInputTextArea({
 			value={value}
 			onChange={onChange}
 			onKeyDown={handleKeyDown}
+			suppressHydrationWarning={true}
 			className={cn(
 				"max-h-[400px] min-h-0 resize-none overflow-x-hidden",
 				variant === "unstyled" &&

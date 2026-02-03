@@ -26,7 +26,7 @@ export function Navbar() {
         
         {/* LOGO (Left) */}
         <Link href="/" className="flex items-center gap-2 group">
-          <span className="font-bold text-2xl tracking-tight text-gray-900">
+          <span className="font-semibold text-2xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-700">
             MinifyLinks
           </span>
         </Link>

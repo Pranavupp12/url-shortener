@@ -8,6 +8,7 @@ export function Footer() {
     { name: "Features", href: "/#features" },
     { name: "FAQs", href: "/#faq" },
     { name: "Privacy Policy", href: "/privacy" },
+    {name: "Terms of Service", href: "/terms" },
   ];
 
   return (
@@ -19,7 +20,7 @@ export function Footer() {
           
           {/* LEFT: Brand */}
           <div className="flex flex-col items-start gap-2">
-            <Link href="/" className="flex items-center gap-2 group">
+            <Link href="/" aria-label="Home page" className="flex items-center gap-2 group">
               <span className="font-bold text-xl tracking-tight text-white">
                 MinifyLinks
               </span>
@@ -36,6 +37,7 @@ export function Footer() {
                 key={link.name}
                 href={link.href}
                 className="text-sm font-medium text-white hover:text-gray-300 transition-colors"
+                aria-label={`Know more about ${link.name}`}
               >
                 {link.name}
               </Link>
@@ -46,20 +48,20 @@ export function Footer() {
         {/* BOTTOM: Divider & Socials */}
         <div className="border-t border-gray-200 mt-10 pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <p className="text-xs text-white">
-            &copy; {new Date().getFullYear()} SwiftLink Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} MinifyLinks Inc. All rights reserved.
           </p>
           
           <div className="flex gap-6 md:gap-4">
-            <a href="#" className="text-white hover:text-gray-300 transition-colors">
+            <a href="#" aria-label="Follow us on Twitter" className="text-white hover:text-gray-300 transition-colors">
               <Twitter className="h-4 w-4" />
             </a>
-            <a href="#" className="text-white hover:text-gray-300 transition-colors">
+            <a href="#" aria-label="Follow us on Facebook" className="text-white hover:text-gray-300 transition-colors">
               <Facebook className="h-4 w-4" />
             </a>
-            <a href="#" className="text-white hover:text-gray-300 transition-colors">
+            <a href="#" aria-label="Follow us on Linkedin" className="text-white hover:text-gray-300 transition-colors">
               <Linkedin className="h-4 w-4" />
             </a>
-            <a href="#" className="text-white hover:text-gray-300 transition-colors">
+            <a href="#" aria-label="Follow us on Github" className="text-white hover:text-gray-300 transition-colors">
               <Github className="h-4 w-4" />
             </a>
           </div>
