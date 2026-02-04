@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import jwt from 'jsonwebtoken'
+import { revalidateTag } from 'next/cache'
 
 const SECRET_KEY = process.env.JWT_SECRET || 'super-secret-key-change-this'
 
@@ -66,6 +67,7 @@ export async function DELETE(
     await prisma.blogPost.delete({
       where: { id }
     })
+    revalidateTag('blog-posts', 'default')
     return NextResponse.json({ success: true })
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete post' }, { status: 500 })

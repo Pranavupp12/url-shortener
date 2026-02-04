@@ -31,7 +31,7 @@ export function FeaturedBlogCard({ post }: { post: BlogPost }) {
           
           {/* 1. "Featured" Badge (Kept as layout anchor) */}
           <div className="absolute top-4 left-4">
-             <Badge className="bg-white/90 text-blue-600 hover:bg-white backdrop-blur-sm px-3 py-1 text-xs font-bold uppercase tracking-wider shadow-sm">
+             <Badge className="bg-white/90 text-blue-600 hover:bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider">
                Featured
              </Badge>
           </div>

@@ -77,7 +77,8 @@ const getCachedPostsData = unstable_cache(
     return { posts, totalCount };
   },
   ['blog-posts-grid'], // Base Cache Key
-  { revalidate: 3600 } // Revalidate every hour
+  { revalidate:3600,tags: ['blog-posts'] } // Revalidate every hour
+  
 );
 
 interface BlogPageProps {

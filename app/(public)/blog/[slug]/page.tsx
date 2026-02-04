@@ -171,7 +171,7 @@ export default async function SingleBlogPage({ params }: Props) {
           
           <div className="lg:col-span-8">
              {post.image && (
-                <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-lg mb-10">
+                <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mb-10">
                   <Image 
                     src={post.image} 
                     alt={post.title} 

@@ -16,10 +16,6 @@ const inter = Inter({ subsets: ["latin"] });
   },
   description: "Simplify your links, amplify your reach. A powerful, free tool to shrink long links.",
   keywords: ["url shortener", "link shortener", "free url shortener"],
-  robots: {
-    index: false,
-    follow: false,
-  },
   openGraph: {
     type: "website",
     locale: "en_US",

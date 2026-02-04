@@ -25,14 +25,14 @@ export async function RelatedPosts({ currentSlug, categories }: RelatedPostsProp
 
   return (
     <div className="space-y-6">
-      <h3 className="font-bold text-gray-900 text-md sm:text-lg border-b pb-2">Related Articles</h3>
+      <h3 className="font-semibold text-gray-900 text-md sm:text-lg border-b pb-2">Related Articles</h3>
       <div className="flex flex-col gap-6">
         {related.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex gap-4 items-start">
             {/* Small Thumbnail */}
             <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden bg-gray-100">
               {post.image ? (
-                <Image src={post.image} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform" />
+                <Image src={post.image} alt={post.title} fill className="object-cover" />
               ) : (
                 <div className="w-full h-full bg-gray-200" />
               )}

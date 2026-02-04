@@ -4,13 +4,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: "Link Ready",
   description: "Your secure short link has been generated successfully.",
-  robots: {
-    index: false,  // Don't show "Link Ready" pages in Google Search results
-    follow: false,
-  },
 };
-
-// In Next.js 15, params is a Promise
 interface PageProps {
   params: Promise<{
     code: string;

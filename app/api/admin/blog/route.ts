@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import jwt from 'jsonwebtoken'
+import { revalidateTag } from 'next/cache'
 
 const SECRET_KEY = process.env.JWT_SECRET || 'super-secret-key-change-this'
 
@@ -92,6 +93,9 @@ export async function POST(req: NextRequest) {
         // but you can override it here if needed.
       }
     })
+
+    revalidateTag('blog-posts', 'default')
+    revalidateTag('blog-categories-list', 'default')
 
     return NextResponse.json(newPost)
 
