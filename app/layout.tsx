@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
     canonical: './', 
   },
   title: {
-    default: "MinifyLinks - Free URL Shortener",
+    default: "Free URL Shortener",
     template: "%s | MinifyLinks",
   },
   description: "Simplify your links, amplify your reach. A powerful, free tool to shrink long links.",
