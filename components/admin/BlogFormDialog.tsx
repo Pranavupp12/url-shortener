@@ -110,8 +110,16 @@ export function BlogFormDialog({ open, onOpenChange, postToEdit, onSuccess }: Bl
   const handleCategoryKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault()
-      const newCat = categoryInput.trim()
-      if (newCat && !formData.categories.includes(newCat)) {
+      
+      // FIX: Trim the input immediately
+      const newCat = categoryInput.trim() 
+
+      // Check if it exists (case-insensitive check is even better)
+      const exists = formData.categories.some(
+         c => c.toLowerCase() === newCat.toLowerCase()
+      )
+
+      if (newCat && !exists) {
         setFormData(prev => ({ ...prev, categories: [...prev.categories, newCat] }))
       }
       setCategoryInput('')

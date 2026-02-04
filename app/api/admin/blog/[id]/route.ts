@@ -46,6 +46,10 @@ export async function PUT(
         isPublished: body.isPublished,
       }
     })
+
+    revalidateTag('blog-posts', 'default') // Refreshes the blog grid/cards
+    revalidateTag('categories', 'default')
+
     return NextResponse.json(updatedPost)
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update post' }, { status: 500 })

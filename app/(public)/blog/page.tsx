@@ -97,7 +97,13 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
 
   // --- STEP 1: Get Categories (Cached) ---
   const allCategoriesRaw = await getCachedCategories();
-  const uniqueCategories = ["All", ...Array.from(new Set(allCategoriesRaw))];
+  // FIX: Clean the data before creating the Set
+  const cleanedCategories = allCategoriesRaw
+    .map(cat => cat.trim())       // 1. Remove invisible spaces (" Tech " -> "Tech")
+    .filter(cat => cat.length > 0); // 2. Remove empty strings if any
+
+  // 3. Create the Set from the CLEANED list
+  const uniqueCategories = ["All", ...Array.from(new Set(cleanedCategories))];
 
   // --- STEP 2: Smart Matching (Client-side logic, fast) ---
   let matchingCategories: string[] = [];
