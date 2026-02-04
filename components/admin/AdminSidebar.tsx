@@ -6,10 +6,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface AdminSidebarProps {
   children: React.ReactNode;
-  userRole: 'ADMIN' | 'EMPLOYEE'; // Receive role as prop
+  userRole: 'ADMIN' | 'EMPLOYEE'; 
   username: string;
 }
 
@@ -18,38 +19,31 @@ export function AdminSidebar({ children, userRole, username }: AdminSidebarProps
   const router = useRouter();
 
   const handleLogout = async () => {
-    // 1. Call the API to delete the cookie
     await fetch("/api/logout", { method: "POST" });
-    
-    // 2. FORCE a hard refresh to the login page
-    // (Do not use router.push here)
     window.location.href = "/admin/login";
   };
 
-
-  // 1. Define all links
   const allLinks = [
     {
       label: "Overview",
       href: "/admin/dashboard",
       icon: <LayoutDashboard className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
-      roles: ['ADMIN'], // Only Admin sees this
+      roles: ['ADMIN'], 
     },
     {
       label: "Analytics",
       href: "/admin/analytics",
       icon: <BarChart2 className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
-      roles: ['ADMIN'], // Only Admin sees this
+      roles: ['ADMIN'], 
     },
     {
       label: "Blog Posts",
       href: "/admin/blog",
       icon: <FileText className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
-      roles: ['ADMIN', 'EMPLOYEE'], // Both see this
+      roles: ['ADMIN', 'EMPLOYEE'], 
     },
   ];
 
-  // 2. Filter links based on the current user's role
   const visibleLinks = allLinks.filter(link => link.roles.includes(userRole));
 
   return (
@@ -60,10 +54,10 @@ export function AdminSidebar({ children, userRole, username }: AdminSidebarProps
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className="justify-between gap-10">
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-            {open ? <Logo /> : <LogoIcon />}
+            {/* 1. PASS THE ROLE PROP HERE */}
+            {open ? <Logo role={userRole} /> : <LogoIcon />}
+            
             <div className="mt-8 flex flex-col gap-2">
-              
-              {/* Render Filtered Links */}
               {visibleLinks.map((link, idx) => (
                 <SidebarLink key={idx} link={link} />
               ))}
@@ -102,13 +96,14 @@ export function AdminSidebar({ children, userRole, username }: AdminSidebarProps
   );
 }
 
-// ... Keep your Logo and LogoIcon components here as they were ...
-export const Logo = () => {
+// 2. UPDATE LOGO TO ACCEPT THE PROP
+export const Logo = ({ role }: { role: string }) => {
   return (
     <Link href="#" className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20">
-      <div className="h-5 w-6 bg-blue-600 rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
-      <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-medium text-black dark:text-white whitespace-pre">
-        MinifyLinks {process.env.NODE_ENV === 'development' ? 'Dev' : ''}
+      <Image src="/logos/favicon-32x32.png" alt="Logo" width={20} height={20} />
+      <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 whitespace-pre">
+        {/* 3. USE THE PROP HERE */}
+        {role === "ADMIN" ? "Admin" : "Editor"} Panel
       </motion.span>
     </Link>
   );
@@ -117,7 +112,7 @@ export const Logo = () => {
 export const LogoIcon = () => {
   return (
     <Link href="#" className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20">
-      <div className="h-5 w-6 bg-blue-600 rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+      <Image src="/logos/favicon-32x32.png" alt="Logo" width={24} height={24} />
     </Link>
   );
 };

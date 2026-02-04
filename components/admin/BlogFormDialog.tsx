@@ -13,7 +13,6 @@ import { toast } from "sonner"
 import Image from 'next/image'
 import { RichTextEditor } from "@/components/admin/RichTextEditor"
 import { uploadEditorImage } from '@/lib/cloudinary-helper'
-// NEW IMPORTS
 import { analyzeSeo } from '@/lib/seo-logic' 
 import { SeoScorecard } from '@/components/admin/SeoScorecard'
 
@@ -211,7 +210,14 @@ export function BlogFormDialog({ open, onOpenChange, postToEdit, onSuccess }: Bl
                   {formData.categories.map((cat, i) => (
                     <Badge key={i} variant="secondary" className="px-2 py-1 flex items-center gap-1">
                       {cat}
-                      <X className="h-3 w-3 cursor-pointer hover:text-red-500" onClick={() => removeCategory(cat)} />
+                      {/* FIX: Wrapped X in a button to ensure click registers properly */}
+                      <button
+                        type="button"
+                        onClick={() => removeCategory(cat)}
+                        className="ml-1 text-gray-500 hover:text-red-500 focus:outline-none transition-colors"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
                     </Badge>
                   ))}
                   {formData.categories.length === 0 && <span className="text-gray-400 text-sm">No categories added yet.</span>}

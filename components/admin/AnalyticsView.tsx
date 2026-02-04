@@ -48,10 +48,10 @@ export default function AnalyticsView() {
   }
 
   return (
-    <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8 bg-slate-50/50 min-h-screen text-slate-900">
+    <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8 bg-white min-h-screen text-slate-900">
       
       {/* Header */}
-      <div className="flex justify-between items-end border-b border-gray-200 pb-6">
+      <div className="flex justify-between items-end border-b border-gray-100 pb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Audience Insights</h1>
           <div className="flex items-center gap-2 mt-2 text-sm text-gray-500 font-medium">
@@ -87,7 +87,9 @@ export default function AnalyticsView() {
       <Card className="border border-gray-100 overflow-hidden bg-white gap-0">
         <CardHeader className="bg-white border-b border-gray-100">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-indigo-50 rounded-lg"><LinkIcon className="h-5 w-5 text-indigo-600" /></div>
+            <div className="p-2 bg-indigo-50 rounded-lg shadow-sm shadow-indigo-100">
+              <LinkIcon className="h-5 w-5 text-indigo-600" />
+            </div>
             <div>
               <CardTitle className="text-lg font-bold text-gray-900">Asset Performance</CardTitle>
               <CardDescription>Accurate counts of unique visitors (24h cache).</CardDescription>
@@ -101,23 +103,40 @@ export default function AnalyticsView() {
              {loading && <div className="absolute inset-0 bg-white/50 z-10 flex items-center justify-center"><Loader2 className="animate-spin text-blue-500"/></div>}
              
              <Table>
-              <TableHeader className="bg-gray-50/50">
-                <TableRow className="hover:bg-transparent border-b border-gray-200">
+              <TableHeader className="bg-gray-50/50 backdrop-blur-md">
+                <TableRow className="hover:bg-transparent border-b border-gray-100">
                   <TableHead className="font-bold text-gray-900 text-[10px] py-4 uppercase pl-6">Link</TableHead>
                   <TableHead className="font-bold text-gray-900 text-[10px] py-4 uppercase">Dominant Geo</TableHead>
                   <TableHead className="font-bold text-gray-900 text-[10px] py-4 uppercase">Dominant Device</TableHead>
                   <TableHead className="font-bold text-gray-900 text-[10px] py-4 uppercase">Dominant Browser</TableHead>
+                  <TableHead className="font-bold text-gray-900 text-[10px] py-4 uppercase">Dominant OS</TableHead>
                   <TableHead className="font-bold text-gray-900 text-[10px] py-4 uppercase text-right pr-6">Unique Clicks (24h)</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {data?.links?.map((link: any) => (
                   <TableRow key={link.shortCode} className="border-b border-gray-50 hover:bg-gray-50/30 transition-colors">
-                    <TableCell className="py-4 pl-6"><span className="text-sm font-bold text-indigo-600">/{link.shortCode}</span></TableCell>
-                    <TableCell className="py-4"><span className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-[10px] font-bold uppercase">{link.topCountry}</span></TableCell>
-                    <TableCell className="py-4"><span className="px-2 py-0.5 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase">{link.topDevice}</span></TableCell>
-                    <TableCell className="py-4"><span className="text-[11px] font-medium text-gray-600">{link.topBrowser}</span></TableCell>
-                    <TableCell className="py-4 text-right pr-6"><span className="text-sm font-black text-gray-900">{link.clicks}</span></TableCell>
+                    <TableCell className="py-4 pl-6">
+                      <span className="text-sm font-bold text-indigo-600">/{link.shortCode}</span>
+                    </TableCell>
+                    <TableCell className="py-4">
+                      <span className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-[10px] font-bold uppercase">{link.topCountry || 'Unknown'}</span>
+                    </TableCell>
+                    <TableCell className="py-4">
+                      <span className="px-2 py-0.5 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase">{link.topDevice || 'Unknown'}</span>
+                    </TableCell>
+                    <TableCell className="py-4">
+                      <span className="text-[11px] font-medium text-gray-600">{link.topBrowser || 'Unknown'}</span>
+                    </TableCell>
+                    <TableCell className="py-4">
+                      {/* ADDED OS COLUMN */}
+                      <span className="px-2 py-0.5 bg-orange-50 text-orange-600 rounded text-[10px] font-bold uppercase">
+                        {link.topOS || 'Unknown'}
+                      </span>
+                    </TableCell>
+                    <TableCell className="py-4 text-right pr-6">
+                      <span className="text-sm font-black text-gray-900">{link.clicks}</span>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -158,7 +177,7 @@ export default function AnalyticsView() {
   )
 }
 
-// --- STAT CARD COMPONENT ---
+// --- STAT CARD COMPONENT (Matched to DashboardView) ---
 function AnalyticsStatCard({ title, icon, items, fallback }: any) {
   const topItem = items && items.length > 0 ? items[0] : null;
   const value = topItem ? topItem.count : 0;
